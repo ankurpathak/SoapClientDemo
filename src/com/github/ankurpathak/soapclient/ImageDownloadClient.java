@@ -22,7 +22,7 @@ public class ImageDownloadClient{
 	
 	public static void main(String[] args) throws Exception {
 	   
-	URL url = new URL("http://localhost:8080/SoapDemo/ImageServerImplService?WSDL");
+	URL url = new URL("http://localhost:8081/SoapDemo/ImageServerImplService?WSDL");
         QName qname = new QName("http://soap.ankurpathak.github.com/", "ImageServerImplService");
 
         Service service = Service.create(url, qname);
