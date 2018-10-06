@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import javax.xml.ws.soap.MTOMFeature;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ByteArrayDownloadClient{
         QName qname = new QName("http://soap.ankurpathak.github.com/", "ImageServerImplService");
 
         Service service = Service.create(url, qname);
-        ImageServer imageServer = service.getPort(ImageServer.class);
+        ImageServer imageServer = service.getPort(ImageServer.class, new MTOMFeature());
  
         /************  test download  ***************/
         byte[] data = imageServer.downloadByteArray();

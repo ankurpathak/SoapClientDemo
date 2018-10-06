@@ -6,12 +6,10 @@
 package com.github.ankurpathak.soapclient;
 
 import com.github.ankurpathak.soap.ImageServer;
+import com.github.ankurpathak.soap.ImageServerNoMtom;
 import java.awt.Image;
 import java.io.File;
 import java.net.URL;
-import java.util.logging.FileHandler;
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,31 +17,35 @@ import javax.swing.JLabel;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.soap.MTOMFeature;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author ankur
  */
-public class DataHandlerUploadClient {
+public class ImageUploadClientNoMtom {
 
     public static void main(String[] args) throws Exception {
-         File previous = ImageServer.PATH_UPLOAD.toFile();
+        
+        File previous = ImageServer.PATH_UPLOAD.toFile();
         
         if(previous.exists()){
             previous.delete();
         }
         
-        URL url = new URL("http://localhost:8081/SoapDemo/ImageServerImplService?WSDL");
-        QName qname = new QName("http://soap.ankurpathak.github.com/", "ImageServerImplService");
+        URL url = new URL("http://localhost:8080/SoapDemo/ImageServerNoMtomImplService?WSDL");
+        QName qname = new QName("http://soap.ankurpathak.github.com/", "ImageServerNoMtomImplService");
 
         Service service = Service.create(url, qname);
-        ImageServer imageServer = service.getPort(ImageServer.class, new MTOMFeature());
+        ImageServerNoMtom imageServer = service.getPort(ImageServerNoMtom.class);
 
-        FileDataSource dataSource = new FileDataSource(ImageServer.PATH_DOWNLOAD.toFile());
-        DataHandler dataHandler = new DataHandler(dataSource);
-        imageServer.uploadDataHandler(dataHandler);
+        /**
+         * ********** test upload ***************
+         */
+        Image imgUpload = ImageIO.read(ImageServer.PATH_DOWNLOAD.toFile());
+        imageServer.uploadImage(imgUpload);
+
         Image imgUploaded = ImageIO.read(ImageServer.PATH_UPLOAD.toFile());
+
         JFrame frame = new JFrame();
         frame.setSize(300, 300);
         JLabel label = new JLabel(new ImageIcon(imgUploaded));
@@ -51,5 +53,6 @@ public class DataHandlerUploadClient {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         System.out.println("Success!!");
+
     }
 }

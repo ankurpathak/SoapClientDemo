@@ -20,7 +20,7 @@ import javax.jws.soap.SOAPBinding.Style;
  */
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)
-public interface ImageServer {
+public interface ImageServerNoMtom {
 
     Path PATH_UPLOAD = Paths.get("/","home", "ankur", "soap", "kotak.jpg");
 

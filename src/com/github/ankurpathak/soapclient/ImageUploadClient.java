@@ -24,6 +24,12 @@ import javax.xml.ws.soap.MTOMFeature;
 public class ImageUploadClient {
 
     public static void main(String[] args) throws Exception {
+        
+        File previous = ImageServer.PATH_UPLOAD.toFile();
+        
+        if(previous.exists()){
+            previous.delete();
+        }
         URL url = new URL("http://localhost:8080/SoapDemo/ImageServerImplService?WSDL");
         QName qname = new QName("http://soap.ankurpathak.github.com/", "ImageServerImplService");
 

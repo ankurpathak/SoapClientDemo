@@ -13,6 +13,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
+import javax.xml.bind.annotation.XmlAttachmentRef;
 
 /**
  *
@@ -20,35 +21,22 @@ import javax.jws.soap.SOAPBinding.Style;
  */
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)
-public interface ImageServer {
+public interface ImageServerSwa {
 
     Path PATH_UPLOAD = Paths.get("/","home", "ankur", "soap", "kotak.jpg");
 
     Path PATH_DOWNLOAD = Paths.get("/", "home", "ankur", "Pictures", "kotak.jpg");
 
     //download a image from server
-    @WebMethod
-    Image downloadImage();
-
-    //update image to server
-    @WebMethod
-    void uploadImage(Image data);
-    
+   
     
     @WebMethod
-    byte[] downloadByteArray();
-    
-    
-    @WebMethod
-    void uploadByteArray(byte[] data);
-    
-    
-    @WebMethod
+    @XmlAttachmentRef
     DataHandler downloadDataHandler();
     
     
     @WebMethod
-    void uploadDataHandler(DataHandler dataHandler);
+    void uploadDataHandler(@XmlAttachmentRef DataHandler dataHandler);
     
 
 }
